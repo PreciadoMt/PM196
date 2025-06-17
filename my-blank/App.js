@@ -1,40 +1,50 @@
 import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Button } from 'react-native-web';
+import React,{useState} from 'react';
 
-const Texto = () => {
-  const [contenido, setContenido] = useState("Hola Mundo");
-  const actualizarTexto = () => { setContenido("sTate actualizado") };
+const Texto= ({style}) => {
+  const [contenido,setContenido] = useState('Hola Mundo')
+  const actualizarTexto = () => {setContenido('State Modificado')}
   return (
-    <Text onPress={actualizarTexto}> {contenido} </Text>
-  );
+    <Text style={[styles.text, style]} onPress={actualizarTexto}> {contenido} </Text>
+  )
 }
 
-// Main 
+
 export default function App() {
-  const [botonTexto, setBotonTexto] = useState("Presióname");
-
-  const actualizarBoton = () => {
-    setBotonTexto("Presionado");
-  }
-
+const [contenido,setContenido] = useState('toca mesta')
+const actualizarBoton = () => {setContenido('apachurrado')}
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <Texto />
-      <Texto />
-      <Texto />
 
-      <Button title={botonTexto} onPress={actualizarBoton}/>
-    </View>
-  );
+    <View style={styles.container}>
+          <StatusBar style="auto" />
+      <Texto style={styles.green}></Texto>
+      <Texto style={styles.red}></Texto>
+      <Texto style={styles.yellow}></Texto>
+      <Button
+      onPress={actualizarBoton} title={contenido} 
+      ></Button>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#000',
+    alignItems: 'center', // 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline'
+    justifyContent: 'center',// 'space-around' | 'space-evenly' | 'flex-start' | 'flex-end' | 'center' | 'stretch'
+    flexDirection: 'column',
   },
+  text: {
+    color: 'blue',
+    fontSize: 28,
+    //width: 200,
+    //height: 200,
+  },
+
+  red:{backgroundColor: 'red',},
+  green:{backgroundColor: 'green',},
+  yellow:{backgroundColor: 'yellow',},
 });
