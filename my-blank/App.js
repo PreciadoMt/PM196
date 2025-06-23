@@ -1,50 +1,91 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { Button } from 'react-native-web';
+//Zona de importaciones
+import { StatusBar } from 'expo-status-bar';    
+import { StyleSheet, Text, View, Button, Alert, Platform } from 'react-native';
 import React,{useState} from 'react';
 
-const Texto= ({style}) => {
-  const [contenido,setContenido] = useState('Hola Mundo')
-  const actualizarTexto = () => {setContenido('State Modificado')}
-  return (
-    <Text style={[styles.text, style]} onPress={actualizarTexto}> {contenido} </Text>
-  )
-}
-
+const showAlert =(message) =>{
+  if(Platform.OS === 'web') {
+    window.alert(message);
+  } else {
+    Alert.alert('Alert', message);
+  }
+};
 
 export default function App() {
-const [contenido,setContenido] = useState('toca mesta')
-const actualizarBoton = () => {setContenido('apachurrado')}
   return (
-
     <View style={styles.container}>
-          <StatusBar style="auto" />
-      <Texto style={styles.green}></Texto>
-      <Texto style={styles.red}></Texto>
-      <Texto style={styles.yellow}></Texto>
-      <Button
-      onPress={actualizarBoton} title={contenido} 
-      ></Button>
-    </View>
-  );
+      <Text style={styles.title}>React Native Buttons Test</Text>
+
+      <View style={styles.section}>
+        <Text style={styles.description}>Boton basico</Text>
+        <Button title='Presioname' onPress={() => showAlert('Boton presionado!')}/>
+      </View>
+
+      <View style={styles.section}>
+        <Text style={styles.description}>Boton de color</Text>
+        <Button
+          title='Presioname'
+          color='purple'
+          onPress={() => showAlert('Boton de color presionado!')}
+        />
+      </View>
+
+      <View style={styles.section}>
+        <Text style={styles.description}>Boton deshabilitado</Text>
+        <Button
+          title='Deshabilitado'
+          disabled
+          onPress={() => showAlert('wtff?')}
+        />
+      </View>
+      <View style={styles.section}>
+        <Text style={styles.description}> Dos botones: </Text>
+          <view style={styles.buttonRow}>
+            <Button
+              title='Izquierda'
+              onPress={() => showAlert('Boton izquierdo presionado!')}
+            />
+            <View style={styles.buttonSpacer}/>
+            <Button
+              title='Derecha'
+              onPress={() => showAlert('Boton Derecho presionado!')}
+            />
+          </view>
+      </View>
+    </View> 
+  );
 }
 
+// Zona de estilos
+// Estilos para la vista principal de la aplicacion
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
-    alignItems: 'center', // 'flex-start' | 'flex-end' | 'center' | 'stretch' | 'baseline'
-    justifyContent: 'center',// 'space-around' | 'space-evenly' | 'flex-start' | 'flex-end' | 'center' | 'stretch'
-    flexDirection: 'column',
+    padding: 20,
+    backgroundColor: '#ffffff',
+    justifyContent: 'center',
   },
-  text: {
-    color: 'blue',
-    fontSize: 28,
-    //width: 200,
-    //height: 200,
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 30,
+    color: '#000000',
   },
-
-  red:{backgroundColor: 'red',},
-  green:{backgroundColor: 'green',},
-  yellow:{backgroundColor: 'yellow',},
+  section: {
+    marginBottom: 20,
+  },
+  description: {
+    fontSize: 16,
+    marginBottom: 10,
+    color: '#333333',
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  buttonSpacer: {
+    width: 10,
+  },
 });
